@@ -139,7 +139,7 @@ func (a *ACOperationsImpl) RecreateACToLVGSC(ctx context.Context, newSC string,
 func (a *ACOperationsImpl) addLVGAnnotationToDrives(ctx context.Context, uuids []string, lvg string) error {
 	for _, uuid := range uuids {
 		drive := &drivecrd.Drive{}
-		if a.k8sClient.ReadCR(ctx, uuid, "", drive) drive != nil {
+		if a.k8sClient.ReadCR(ctx, uuid, "", drive); drive != nil {
 			annotationKey := fmt.Sprintf("%s/%s", apiV1.DriveAnnotationLVGPrefix, lvg)
 			// init map if empty
 			if drive.Annotations == nil {
