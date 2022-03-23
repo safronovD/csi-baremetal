@@ -741,7 +741,8 @@ func (vo *VolumeOperationsImpl) getPersistentVolumeClaimLabels(ctx context.Conte
 
 func (vo *VolumeOperationsImpl) deleteLVGAnnotation(ctx context.Context, uuids []string, lvg string) error {
 	for _, uuid := range uuids {
-		if drive := vo.crHelper.GetDriveCRByUUID(uuid); drive != nil {
+		drive := &drivecrd.Drive{}
+		if vo.k8sClient.ReadCR(ctx, uuid, "", drive) != nil {
 			annotationKey := fmt.Sprintf("%s/%s", apiV1.DriveAnnotationLVGPrefix, lvg)
 			delete(drive.Annotations, annotationKey)
 			if err := vo.k8sClient.UpdateCR(ctx, drive); err != nil {

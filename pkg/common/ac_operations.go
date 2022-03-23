@@ -20,6 +20,7 @@ package common
 import (
 	"context"
 	"fmt"
+	"github.com/dell/csi-baremetal/api/v1/drivecrd"
 
 	"github.com/google/uuid"
 	"github.com/sirupsen/logrus"
@@ -137,7 +138,8 @@ func (a *ACOperationsImpl) RecreateACToLVGSC(ctx context.Context, newSC string,
 
 func (a *ACOperationsImpl) addLVGAnnotationToDrives(ctx context.Context, uuids []string, lvg string) error {
 	for _, uuid := range uuids {
-		if drive := a.crHelper.GetDriveCRByUUID(uuid); drive != nil {
+		drive := &drivecrd.Drive{}
+		if a.k8sClient.ReadCR(ctx, uuid, "", drive) drive != nil {
 			annotationKey := fmt.Sprintf("%s/%s", apiV1.DriveAnnotationLVGPrefix, lvg)
 			// init map if empty
 			if drive.Annotations == nil {
