@@ -20,7 +20,6 @@ package common
 import (
 	"context"
 	"fmt"
-	"github.com/dell/csi-baremetal/api/v1/drivecrd"
 
 	"github.com/google/uuid"
 	"github.com/sirupsen/logrus"
@@ -28,6 +27,7 @@ import (
 	api "github.com/dell/csi-baremetal/api/generated/v1"
 	apiV1 "github.com/dell/csi-baremetal/api/v1"
 	accrd "github.com/dell/csi-baremetal/api/v1/availablecapacitycrd"
+	"github.com/dell/csi-baremetal/api/v1/drivecrd"
 	"github.com/dell/csi-baremetal/pkg/base"
 	"github.com/dell/csi-baremetal/pkg/base/capacityplanner"
 	"github.com/dell/csi-baremetal/pkg/base/k8s"
