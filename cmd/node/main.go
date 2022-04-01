@@ -133,7 +133,7 @@ func main() {
 	csiUDSServer := rpc.NewServerRunner(nil, *csiEndpoint, enableMetrics, logger)
 
 	kubeCache, err := k8s.InitKubeCache(stopCH, logger,
-		&drivecrd.Drive{}, &volumecrd.Volume{})
+		&drivecrd.Drive{}, &accrd.AvailableCapacity{}, &volumecrd.Volume{})
 	if err != nil {
 		logger.Fatalf("fail to start kubeCache, error: %v", err)
 	}
