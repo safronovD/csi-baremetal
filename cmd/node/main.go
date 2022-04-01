@@ -38,6 +38,7 @@ import (
 
 	"github.com/container-storage-interface/spec/lib/go/csi"
 	api "github.com/dell/csi-baremetal/api/generated/v1"
+	accrd "github.com/dell/csi-baremetal/api/v1/availablecapacitycrd"
 	"github.com/dell/csi-baremetal/api/v1/drivecrd"
 	"github.com/dell/csi-baremetal/api/v1/lvgcrd"
 	"github.com/dell/csi-baremetal/api/v1/volumecrd"
