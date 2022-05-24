@@ -91,17 +91,18 @@ jobs:
       with:
         result-encoding: string
         script: |
-          var body = "Start CI"
+          const { OPERATOR_BRANCH, CHECKOUT_BRANCH_OUTCOME } = process.env
           var operator_branch = `${OPERATOR_BRANCH}`
           var checkout_branch_outcome = `${CHECKOUT_BRANCH_OUTCOME}`
+          
           if (checkout_branch_outcome === 'failure'){
             if (operator_branch !== 'keyword'){
-              body = 'Branch doesnt exist'
+              return 'Branch doesn't exist'
             } else {
-              body = 'Keyword error'
+              return 'Keyword error'
             }
           }
-          return body
+          return 'Start CI'
 
     - name: Send CI details
       # don't send on push to master
@@ -271,6 +272,7 @@ jobs:
       with:
         result-encoding: string
         script: |
+          const { TEST_RESULT } = process.env
           var result = `${TEST_RESULT}`
           if (result === 'failure' ){
             return 'CI tests failed'
