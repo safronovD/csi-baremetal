@@ -92,11 +92,8 @@ jobs:
         result-encoding: string
         script: |
           const { OPERATOR_BRANCH, CHECKOUT_BRANCH_OUTCOME } = process.env
-          var operator_branch = `${OPERATOR_BRANCH}`
-          var checkout_branch_outcome = `${CHECKOUT_BRANCH_OUTCOME}`
-          
-          if (checkout_branch_outcome === 'failure'){
-            if (operator_branch !== 'keyword'){
+          if (`${CHECKOUT_BRANCH_OUTCOME}` === 'failure'){
+            if (`${OPERATOR_BRANCH}` !== 'keyword'){
               return 'Branch doesn't exist'
             } else {
               return 'Keyword error'
