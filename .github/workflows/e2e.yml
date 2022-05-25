@@ -94,12 +94,12 @@ jobs:
           const { OPERATOR_BRANCH, CHECKOUT_BRANCH_OUTCOME } = process.env
           if (`${CHECKOUT_BRANCH_OUTCOME}` === 'failure'){
             if (`${OPERATOR_BRANCH}` !== 'keyword'){
-              return 'Branch doesn't exist'
+              return "Branch doesn't exist"
             } else {
-              return 'Keyword error'
+              return "Keyword error"
             }
           }
-          return 'Start CI'
+          return "Start CI"
 
     - name: Send CI details
       # don't send on push to master
