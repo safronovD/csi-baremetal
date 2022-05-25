@@ -3,7 +3,7 @@ name: e2e
 on:
   push:
     branches: [ master ]
-  issue_comment:
+  pull_request_comment:
     types: [ created ]
 
 env:
@@ -83,6 +83,7 @@ jobs:
       continue-on-error: true 
     
     - name: Create answer body
+      if: github.event.issue.pull_request && startsWith(github.event.comment.body, '/ci')
       uses: actions/github-script@v5
       id: set-answer
       env:
@@ -258,7 +259,7 @@ jobs:
   result_job:
     needs: e2e
     # answer must be posted on PR with /ci comment only
-    if: github.event_name == 'issue_comment' && startsWith(github.event.comment.body, '/ci')
+    if: always() && github.event_name == 'issue_comment' && startsWith(github.event.comment.body, '/ci')
     runs-on: ubuntu-20.04
     steps:
     - name: Create answer body 
@@ -270,13 +271,12 @@ jobs:
         result-encoding: string
         script: |
           const { TEST_RESULT } = process.env
-          var result = `${TEST_RESULT}`
-          if (result === 'failure' ){
-            return 'CI tests failed'
+          if (`${TEST_RESULT}` === 'failure' ){
+            return "CI tests failed"
           } else if (result === 'success'){
-            return 'CI tests passed'
+            return "CI tests passed"
           } else {
-            return 'CI tests canceled'
+            return "CI tests canceled"
           }
 
     - name: answer
