@@ -118,8 +118,6 @@ jobs:
           GoLangCI Version: ${{ env.golangci_version }}
           Helm Version: ${{ env.helm_version }}
           Kubectl Version: ${{ env.kubectl_version }}
-          CSI Version: ${{ env.CSI_VERSION }}
-          OPERATOR Version: ${{ env.CSI_OPERATOR_VERSION }}
 
     - name: Check on failures
       if: steps.checkout_branch.outcome != 'success'
@@ -273,11 +271,10 @@ jobs:
           const { TEST_RESULT } = process.env
           if (`${TEST_RESULT}` === 'failure' ){
             return "CI tests failed"
-          } else if (result === 'success'){
+          } else if (`${TEST_RESULT}` === 'success'){
             return "CI tests passed"
-          } else {
-            return "CI tests canceled"
           }
+          return "CI tests canceled"
 
     - name: answer
       uses: actions-ecosystem/action-create-comment@v1
